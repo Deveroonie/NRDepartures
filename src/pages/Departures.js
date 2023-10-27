@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import GetStops from '../components/GetCallingStops';
+import GetProperNameAndManager from '../components/GetProperNameAndManager';
 
 export default function Departures() {
     const { id } = useParams();
@@ -24,7 +25,8 @@ export default function Departures() {
     return (
         <div className="container mx-auto p-8 m-10">
             <h1 className='text-white text-center text-3xl'>National Rail Departures</h1><br />
-            <p className='text-white text-center text-lg'><a href={`/arrivals/${id}`}>Switch to arrivals</a></p>
+            <p className='text-white text-center text-lg'><a href={`/arrivals/${id}`}>Switch to arrivals</a></p><br />
+            <GetProperNameAndManager stname={id} type="Departures" />
         <div className="grid grid-cols-6 grid-rows-1 gap-4 text-white text-md">
         <div >Operator</div>
         <div >Destination</div>
