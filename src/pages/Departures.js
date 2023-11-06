@@ -4,6 +4,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import GetStops from '../components/GetCallingStops';
 import GetProperNameAndManager from '../components/GetProperNameAndManager';
+import ShowDelayWarning from '../components/ShowDelayWarning';
 
 export default function Departures() {
     const { id } = useParams();
@@ -24,6 +25,7 @@ export default function Departures() {
     }, []);
     return (
         <div className="container mx-auto p-8 m-10">
+        <ShowDelayWarning stname={id} />
             <h1 className='text-white text-center text-3xl'>National Rail Departures</h1><br />
             <p className='text-white text-center text-lg'><a href={`/arrivals/${id}`}>Switch to arrivals</a></p><br />
             <GetProperNameAndManager stname={id} type="Departures" />
@@ -59,9 +61,9 @@ export default function Departures() {
     )
     function getBadge(std,etd) {
         if(std !== etd && etd !== "Cancelled" && etd !== "On time") {
-            return (<span class="bg-yellow-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded ">{etd}</span>)
+            return (<span className="bg-yellow-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded ">{etd}</span>)
         } else if (etd === "Cancelled") {
-            return (<span class="bg-red-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded ">Cancelled</span>)
+            return (<span className="bg-red-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded ">Cancelled</span>)
         } else if(etd === "On time") {
             return "On time"
         }
