@@ -6,7 +6,9 @@ export default function ShowDelayWarning(data) {
   useEffect(() => {
       async function fetchData() {
         try {
-          const response = await axios.get(`https://nrdeparturesdelaysapi.cyclic.app/api/v1/departures/${data.stname}`)
+          const response = await axios.get(`https://nrdeparturesdelaysapi.cyclic.app/api/v1/${data.type}/${data.stname}?limit=${data.limit}`)
+          //const response = await axios.get(`http://localhost:5000/api/v1/${data.type}/${data.stname}?limit=${data.limit}`)
+
           setResponse(response.data);
         } catch (error) {
           console.error("Error fetching data:", error);

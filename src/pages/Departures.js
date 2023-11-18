@@ -1,5 +1,5 @@
 import '../App.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import GetStops from '../components/GetCallingStops';
@@ -7,14 +7,15 @@ import GetProperNameAndManager from '../components/GetProperNameAndManager';
 import ShowDelayWarning from '../components/ShowDelayWarning';
 
 export default function Departures() {
-    const { id } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [response, setResponse] = useState([]);
-
+    const { id } = useParams();
+    const limit = searchParams.get('limit');
 
     useEffect(() => {
       async function fetchData() {
         try {
-          const response = await axios.get(`https://huxley2.azurewebsites.net/departures/${id}`);
+          const response = await axios.get(`https://huxley2.azurewebsites.net/departures/${id}/${limit || 10}`);
           setResponse(response.data.trainServices);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -25,9 +26,9 @@ export default function Departures() {
     }, []);
     return (
         <div className="container mx-auto p-8 m-10">
-        <ShowDelayWarning stname={id} />
+        <ShowDelayWarning stname={id} type="departures" limit={limit} />
             <h1 className='text-white text-center text-3xl'>National Rail Departures</h1><br />
-            <p className='text-white text-center text-lg'><a href={`/arrivals/${id}`}>Switch to arrivals</a></p><br />
+            <p className='text-white text-center text-lg'><a href={`/arrivals/${id}?limit=${limit || 10}`}>Switch to arrivals</a></p><br />
             <GetProperNameAndManager stname={id} type="Departures" />
         <div className="grid grid-cols-6 grid-rows-1 gap-4 text-white text-md">
         <div >Operator</div>
