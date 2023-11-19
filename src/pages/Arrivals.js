@@ -2,6 +2,7 @@ import '../App.css';
 import { useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import ReactGA4 from 'react-ga4';
 import GetStops from '../components/GetCallingStops';
 import GetProperNameAndManager from '../components/GetProperNameAndManager';
 import ShowDelayWarning from '../components/ShowDelayWarning';
@@ -14,15 +15,25 @@ export default function Arrivals() {
 
 
     useEffect(() => {
+        async function sendToGA() {
+            ReactGA4.send({
+                hitType: 'event',
+                eventCategory: ``,
+                eventAction: 'Arrivals View',
+                eventLabel: ``,
+                stationViewed: id,
+                limit: limit || 10
+              });
+           }
       async function fetchData() {
         try {
-          const response = await axios.get(`https://huxley2.azurewebsites.net/arrivals/${id}/${limit || 10}`);
+          const response = await axios.get(`https://huxley2.azurewebsites.net/arrivals/${id}/${limit || 10}&utm_source=internal&utm_medium=link&utm_campaign=switch_to_departures`);
           setResponse(response.data.trainServices);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       }
-  
+      sendToGA()
       fetchData();
     }, []);
     return (
