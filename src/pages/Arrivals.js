@@ -27,7 +27,7 @@ export default function Arrivals() {
            }
       async function fetchData() {
         try {
-          const response = await axios.get(`https://huxley2.azurewebsites.net/arrivals/${id}/${limit || 10}&utm_source=internal&utm_medium=link&utm_campaign=switch_to_departures`);
+          const response = await axios.get(`https://huxley2.azurewebsites.net/arrivals/${id}/${limit || 10}`);
           setResponse(response.data.trainServices);
         } catch (error) {
           console.error("Error fetching data:", error);
