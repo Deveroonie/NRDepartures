@@ -26,20 +26,30 @@ export default function GetStops(data) {
   
       fetchData();
     }, []);
+    function reload() {
+      window.location.reload(false)
+    }
+    if(data.id == "ERRNOSRVCES") {
+      return (
+        <div>
+          Failed to load services. <a onClick={reload} className="cursor-pointer underline">Click here to retry</a> or <a href="/?utm_source=internal&utm_medium=link&utm_campaign=go_to_homepage_error" className="cursor-pointer underline">  click here to return to the homepage</a>.
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          Calling at:&nbsp;
+          {response.map((data, index, array) => (
+            <span key={index}>
+              {data.locationName}
+              {data.st !== "" && ` (${data.st})`}
+              {index !== array.length - 1 ? ", " : ""}
+            </span>
+          ))}
+        </div>
+      );
+    }
 
-
-    return (
-      <div>
-        Calling at:&nbsp;
-        {response.map((data, index, array) => (
-          <span key={index}>
-            {data.locationName}
-            {data.st !== "" && ` (${data.st})`}
-            {index !== array.length - 1 ? ", " : ""}
-          </span>
-        ))}
-      </div>
-    );
     
     
 }

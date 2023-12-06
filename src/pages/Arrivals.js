@@ -28,7 +28,25 @@ export default function Arrivals() {
       async function fetchData() {
         try {
           const response = await axios.get(`https://huxley2.azurewebsites.net/arrivals/${id}/${limit || 10}`);
-          setResponse(response.data.trainServices);
+          if(response.data.trainServices == null) {
+            setResponse([
+                {
+                    "operatorCode": "",
+                    "destination": [
+                        {
+                            "locationName": ""
+                        }
+                    ],
+                    "platform": " ",
+                    "length": "",
+                    "std": "",
+                    "etd": "",
+                    "serviceIdUrlSafe": "ERRNOSRVCES"
+                }
+            ])
+          } else {
+            setResponse(response.data.trainServices);
+          }
         } catch (error) {
           console.error("Error fetching data:", error);
         }
