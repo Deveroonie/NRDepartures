@@ -31,9 +31,9 @@ export default function Departures() {
        }
        async function fetchData() {
         try {
-          const response = await axios.get(`https://huxley2.azurewebsites.net/arrivals/${id}/${limit || 10}`);
+          const response = await axios.get(`https://huxley2.azurewebsites.net/departures/${id}/${limit || 10}`);
           console.log(response.data)
-          if(response.data.trainServices == null && response.data.busServices == null) {
+          if(response.data.trainServices == null && response.data.busServices == null) { // BUSSES: NO, TRAINS: NO
             setResponse([
                 {
                     "operatorCode": "",
@@ -49,8 +49,8 @@ export default function Departures() {
                     "serviceIdUrlSafe": "ERRNOSRVCES"
                 }
             ])
-          } else {
-            if(response.data.trainServices == null && response.data.busServices !== null) {
+          }  
+          if(response.data.trainServices == null && response.data.busServices !== null) { // BUSSES: YES, TRAINS: NO
                 setResponse([
                     {
                         "operatorCode": "",
@@ -66,15 +66,17 @@ export default function Departures() {
                         "serviceIdUrlSafe": "ERRDONTDISPLAY"
                     }
                 ])
-            } else {
-                setResponse(response.data.trainServices);
             }
+            if(response.data.trainServices !== null) { // TRAINS: YES
+            setResponse(response.data.trainServices)
           }
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       }
       sendToGA();
+      fetchData();
+      console.log(response)
     }, []);
     return (
         <div className="container mx-auto p-8 m-10">
