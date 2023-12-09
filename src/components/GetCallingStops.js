@@ -36,18 +36,27 @@ export default function GetStops(data) {
         </div>
       )
     } else {
-      return (
-        <div>
-          Calling at:&nbsp;
-          {response.map((data, index, array) => (
-            <span key={index}>
-              {data.locationName}
-              {data.st !== "" && ` (${data.st})`}
-              {index !== array.length - 1 ? ", " : ""}
-            </span>
-          ))}
-        </div>
-      );
+      if(data.id == "ERRDONTDISPLAY") {
+        return (
+          <div>
+
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            Calling at:&nbsp;
+            {response.map((data, index, array) => (
+              <span key={index}>
+                {data.locationName}
+                {data.st !== "" && ` (${data.st})`}
+                {index !== array.length - 1 ? ", " : ""}
+              </span>
+            ))}
+          </div>
+        );
+      }
+
     }
 
     
