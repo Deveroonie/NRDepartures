@@ -49,7 +49,6 @@ export default function Arrivals() {
             ])
           } else {
             if(response.data.trainServices == null && response.data.busServices !== null) {
-                console.log("NO TS // IS BS")
                 setResponse([
                     {
                         "operatorCode": "",
@@ -66,7 +65,6 @@ export default function Arrivals() {
                     }
                 ])
             } else {
-                console.log("WE ARE AT THE POINT")
                 setResponse(response.data.trainServices);
             }
           }

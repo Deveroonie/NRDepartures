@@ -39,7 +39,7 @@ function DeparturesForm() {
     const [limit, setLimit] = useState("10")
     const handleSubmit = (event) => {
       event.preventDefault();
-      navigate(`/departures/${name}?limit=${limit}&utm_source=internal&utm_medium=form&utm_campaign=view_arrivals_homepage`)
+      navigate(`/arrivals/${name}?limit=${limit}&utm_source=internal&utm_medium=form&utm_campaign=view_arrivals_homepage`)
     }
   
     return (
