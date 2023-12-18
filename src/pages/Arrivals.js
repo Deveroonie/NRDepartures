@@ -108,7 +108,7 @@ export default function Arrivals() {
                       <div>{data.length}</div>
                       <div>{data.sta}</div>
                       <div>
-                        <GetBadge std={data.std} etd={data.etd}></GetBadge>
+                        <GetBadge std={data.sta} etd={data.eta}></GetBadge>
                       </div>
                     </div>
                     <div>
