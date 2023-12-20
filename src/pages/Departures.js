@@ -3,6 +3,8 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import ReactGA4 from 'react-ga4';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import GetStops from '../components/GetCallingStops';
 import GetBadge from '../components/GetBadge'; 
 import GetProperNameAndManager from '../components/GetProperNameAndManager';
@@ -78,7 +80,29 @@ export default function Departures() {
       fetchData();
       console.log(response)
     }, []);
+    async function showPopup(serviceID) {
+        if (Swal.isVisible()) {
+            return;
+          }
+        const popup = withReactContent(Swal)
+        const res = await axios.get(`https://huxley2.azurewebsites.net/service/${serviceID}`)
+        popup.fire({
+            icon: "info",
+            title: `${res.data.std} ${res.data.operator} service from ${res.data.previousCallingPoints[0].callingPoint[0].locationName} to ${res.data.subsequentCallingPoints[0].callingPoint.pop().locationName}`,
+            html: `
+            Calling at: <br />
+            ${res.data.previousCallingPoints[0].callingPoint.map(map).join("")}
+            ${res.data.locationName} (${res.data.sta})<br />
+            ${res.data.subsequentCallingPoints[0].callingPoint.map(map).join("")}
+             `
+            
+        })
+    }
+    function map(item) {
+        return [`${item.locationName} (${item.st})<br />`];
+      }
     return (
+
         <div className="container mx-auto p-8 m-10">
 
         <ShowDelayWarning stname={id} type="departures" limit={limit} />
@@ -95,7 +119,7 @@ export default function Departures() {
         </div>            
         <div className="grid grid-cols-1 gap-4 text-white" style={{paddingTop: "16px"}}>
             {response.map((data) => (
-                 <div key={data.serviceIdUrlSafe} className="bg-gray-800 rounded-lg p-4">
+                 <div key={data.serviceIdUrlSafe} className="bg-gray-800 rounded-lg p-4" onClick={() => showPopup(data.serviceIdUrlSafe)}>
                 
                     <div className="grid grid-cols-6 grid-rows-1 gap-4">
                         <div>{data.operatorCode}</div>
