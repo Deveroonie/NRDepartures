@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^14.5.2",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.8",
-    "postcss": "^8.4.37",
+    "postcss": "^8.4.38",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-ga4": "^2.1.0",
