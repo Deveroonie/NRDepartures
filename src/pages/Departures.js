@@ -119,7 +119,7 @@ export default function Departures() {
         </div>            
         <div className="grid grid-cols-1 gap-4 text-white" style={{paddingTop: "16px"}}>
             {response.map((data) => (
-                 <div key={data.serviceIdUrlSafe} className="bg-gray-800 rounded-lg p-4" onClick={() => showPopup(data.serviceIdUrlSafe)}>
+                 <div key={data.serviceIdGuid} className="bg-gray-800 rounded-lg p-4" onClick={() => showPopup(data.serviceIdGuid)}>
                 
                     <div className="grid grid-cols-6 grid-rows-1 gap-4">
                         <div>{data.operatorCode}</div>
@@ -132,7 +132,7 @@ export default function Departures() {
                         <div><GetBadge std={data.std} etd={data.etd}></GetBadge></div>
                         
                     </div>
-                    <div ><GetStops id={data.serviceIdUrlSafe} /> {data.cancelReason || data.delayReason}  </div>
+                    <div ><GetStops id={data.serviceIdGuid} /> {data.cancelReason || data.delayReason}  </div>
                  </div>
                  
             ))}
